@@ -1,0 +1,11 @@
+{
+  "name": "sphero360-backend",
+  "version": "1.0.0",
+  "description": "The backend for the Sphero360 project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Shane Klein",
+  "license": "GNU GPL v3.0"
+}
