@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.speedTimer = new System.Windows.Forms.Timer(this.components);
             this.inputTimer = new System.Windows.Forms.Timer(this.components);
             this._btnConnectToBackend = new System.Windows.Forms.Button();
@@ -177,7 +178,7 @@
             this._txtTurnRate.Size = new System.Drawing.Size(51, 20);
             this._txtTurnRate.TabIndex = 11;
             this._txtTurnRate.Value = new decimal(new int[] {
-            35,
+            25,
             0,
             0,
             0});
@@ -239,6 +240,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this._txtServer);
             this.Controls.Add(this._btnConnectToBackend);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "Sphero360 Frontend";
             this.Load += new System.EventHandler(this.MainForm_Load);
