@@ -1,0 +1,11 @@
+C:\Users\Shane\Desktop\Sphero360\frontend\Sphero 360 Frontend\Sphero 360 Frontend\bin\Debug\Sphero 360 Frontend.exe.config
+C:\Users\Shane\Desktop\Sphero360\frontend\Sphero 360 Frontend\Sphero 360 Frontend\bin\Debug\Sphero 360 Frontend.exe
+C:\Users\Shane\Desktop\Sphero360\frontend\Sphero 360 Frontend\Sphero 360 Frontend\bin\Debug\Sphero 360 Frontend.pdb
+C:\Users\Shane\Desktop\Sphero360\frontend\Sphero 360 Frontend\Sphero 360 Frontend\bin\Debug\Microsoft.Xna.Framework.dll
+C:\Users\Shane\Desktop\Sphero360\frontend\Sphero 360 Frontend\Sphero 360 Frontend\bin\Debug\Microsoft.Xna.Framework.xml
+C:\Users\Shane\Desktop\Sphero360\frontend\Sphero 360 Frontend\Sphero 360 Frontend\obj\Debug\Sphero 360 Frontend.csprojResolveAssemblyReference.cache
+C:\Users\Shane\Desktop\Sphero360\frontend\Sphero 360 Frontend\Sphero 360 Frontend\obj\Debug\Sphero_360_Frontend.MainForm.resources
+C:\Users\Shane\Desktop\Sphero360\frontend\Sphero 360 Frontend\Sphero 360 Frontend\obj\Debug\Sphero_360_Frontend.Properties.Resources.resources
+C:\Users\Shane\Desktop\Sphero360\frontend\Sphero 360 Frontend\Sphero 360 Frontend\obj\Debug\Sphero 360 Frontend.csproj.GenerateResource.Cache
+C:\Users\Shane\Desktop\Sphero360\frontend\Sphero 360 Frontend\Sphero 360 Frontend\obj\Debug\Sphero 360 Frontend.exe
+C:\Users\Shane\Desktop\Sphero360\frontend\Sphero 360 Frontend\Sphero 360 Frontend\obj\Debug\Sphero 360 Frontend.pdb
