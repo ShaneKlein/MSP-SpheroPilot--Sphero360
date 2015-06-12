@@ -67,7 +67,7 @@
             this._btnConnectToBackend.Name = "_btnConnectToBackend";
             this._btnConnectToBackend.Size = new System.Drawing.Size(260, 23);
             this._btnConnectToBackend.TabIndex = 1;
-            this._btnConnectToBackend.Text = "Connect To Backend";
+            this._btnConnectToBackend.Text = "Connect to Backend";
             this._btnConnectToBackend.UseVisualStyleBackColor = true;
             this._btnConnectToBackend.Click += new System.EventHandler(this._btnConnectToBackend_Click);
             // 
