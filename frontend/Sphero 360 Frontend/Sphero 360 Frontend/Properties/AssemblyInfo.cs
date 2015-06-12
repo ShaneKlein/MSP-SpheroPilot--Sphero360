@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Sphero 360 Frontend")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("The frontend for Sphero360")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Hypersonic Apps")]
 [assembly: AssemblyProduct("Sphero 360 Frontend")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
