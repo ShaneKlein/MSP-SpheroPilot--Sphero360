@@ -21,7 +21,9 @@ namespace Sphero_360_Frontend
         private int _speed = 0;
         private int _oldSpeed = 0;
 
-        private TcpClient _tcpClient;
+        private System.Drawing.Color _spheroColor = System.Drawing.Color.LimeGreen;
+
+        private TcpClient _tcpClient = new TcpClient();
         private NetworkStream _stream;
 
         private GamePadState _currentState;
@@ -47,11 +49,18 @@ namespace Sphero_360_Frontend
             {
                 _roll(_speed, _direction);
             }
+
+            if (spheroColorDialog.Color != _spheroColor)
+            {
+                _changeColor(spheroColorDialog.Color);
+            }
         }
 
         //This timer runs to check for new input.
         private void inputTimer_Tick(object sender, EventArgs e)
         {
+            bool stoppedOrb = false;
+
             //Get the gamepad's state
             _currentState = GamePad.GetState(PlayerIndex.One);
 
@@ -67,10 +76,17 @@ namespace Sphero_360_Frontend
                 _speed = (int)_txtBoostSpeed.Value;
             }
 
-            //Check if the user just pressed B to reverse (Spin 180 degrees). Only activates if B wasn't held down the previous tick.
-            if (_currentState.Buttons.B == Microsoft.Xna.Framework.Input.ButtonState.Pressed && _previousState.Buttons.B == Microsoft.Xna.Framework.Input.ButtonState.Released)
+            //Check if the user just pressed X to reverse (Spin 180 degrees). Only activates if X wasn't held down the previous tick.
+            if (_currentState.Buttons.X == Microsoft.Xna.Framework.Input.ButtonState.Pressed && _previousState.Buttons.X == Microsoft.Xna.Framework.Input.ButtonState.Released)
             {
                 _direction += 180;
+            }
+
+            //Check if user is pressing B to stop.
+            if (_currentState.Buttons.B == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
+            {
+                _stopOrb();
+                stoppedOrb = true;
             }
 
             //Reduce the direction (Convert the direction if >= 360)
@@ -91,8 +107,8 @@ namespace Sphero_360_Frontend
                 _speed = 1;
             }
 
-            //Only call _roll if the ball is turned. Otherwise, let the speedTimer handle it so we don't spam.
-            if (_direction != _oldDirection)
+            //Only call _roll if the ball is turned or speed changed. Otherwise, let the speedTimer handle it so we don't spam.
+            if (!stoppedOrb && (_direction != _oldDirection || _speed != _oldSpeed))
             {
                 _roll(_speed, _direction);
             }
@@ -110,15 +126,42 @@ namespace Sphero_360_Frontend
         //Makes the ball roll at speed oriented in direction
         private void _roll(int speed, int direction)
         {
+            //Message is JSON object containing speed and direction
+            string jsonMessage = "{\"speed\":\"" + speed + "\", \"direction\":\"" + direction + "\"}";
+            
+            //Send it
+            _sendMessage(jsonMessage);
+        }
+
+        //Changes the color of the ball
+        private void _changeColor(System.Drawing.Color newCollor)
+        {
+            //Set our current color to the new color
+            _spheroColor = newCollor;
+
+            //Send message. We have to convert the color to a hex code.
+            //The horribly ugly converting the color to Argb to color before converting to hex is because before that, it could output "Lime"
+            string jsonMessage = "{\"color\":\"" + ColorTranslator.ToHtml(System.Drawing.Color.FromArgb(_spheroColor.ToArgb())) + "\"}";
+
+            //Send it
+            _sendMessage(jsonMessage);
+        }
+
+        //Stops the ball
+        private void _stopOrb()
+        {
+            string jsonMessage = "{\"stopOrb\":true}";
+            _speed = 0;
+            _sendMessage(jsonMessage);
+        }
+
+        private void _sendMessage(string message)
+        {
             //Only do stuff if we're (supposed to be) connected.
             if (_tcpClient.Connected)
             {
-
-                //Message is JSON object containing speed and direction
-                string jsonMessage = "{\"speed\":\"" + speed + "\", \"direction\":\"" + direction + "\"}";
-
                 //Convert our message into a Byte Array
-                Byte[] data = System.Text.Encoding.ASCII.GetBytes(jsonMessage);
+                Byte[] data = System.Text.Encoding.ASCII.GetBytes(message);
 
                 //Try to send it!
                 try
@@ -211,6 +254,11 @@ namespace Sphero_360_Frontend
             }
 
             _updateConnectDisconnectFormItems();
+        }
+
+        private void _btnShowColorDialog_Click(object sender, EventArgs e)
+        {
+            spheroColorDialog.ShowDialog();
         }
     }
 }

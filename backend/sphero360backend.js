@@ -14,6 +14,7 @@ orb.connect(listen);
 
 var speed = 0;
 var direction = 0;
+var stopRoll = false;
 
 //Runs once connected to Sphero.
 function listen() {
@@ -64,13 +65,28 @@ function handleCommand(c)
 		
 		if(commandObject.hasOwnProperty('color'))
 		{
-			orb.color(commandObject.direction);
+			console.log("Color: " + commandObject.color);
+			orb.color(commandObject.color);
 		}
 		
+		stopRoll = false;
+		if(commandObject.hasOwnProperty('stopOrb'))
+		{
+			if(commandObject.stopOrb)
+			{
+				orb.roll(0, direction, 0);
+				stopRoll = true;
+			}
+		}
+		
+		
+		if(!stopRoll)
+		{
 		//Output to log
 		console.log("Speed: " + speed + "; Direction: " + direction);
 		
 		//Let's roll!
 		orb.roll(speed, direction);
+		}
 	}
 }

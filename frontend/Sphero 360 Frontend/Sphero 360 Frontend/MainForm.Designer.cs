@@ -44,6 +44,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this._txtBoostSpeed = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
+            this.spheroColorDialog = new System.Windows.Forms.ColorDialog();
+            this._btnShowColorDialog = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this._txtPort)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._txtMaxSpeed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._txtTurnRate)).BeginInit();
@@ -223,11 +225,26 @@
             this.label5.TabIndex = 12;
             this.label5.Text = "Boost Speed";
             // 
+            // spheroColorDialog
+            // 
+            this.spheroColorDialog.Color = System.Drawing.Color.LimeGreen;
+            // 
+            // _btnShowColorDialog
+            // 
+            this._btnShowColorDialog.Location = new System.Drawing.Point(17, 163);
+            this._btnShowColorDialog.Name = "_btnShowColorDialog";
+            this._btnShowColorDialog.Size = new System.Drawing.Size(255, 23);
+            this._btnShowColorDialog.TabIndex = 14;
+            this._btnShowColorDialog.Text = "Choose Sphero Color";
+            this._btnShowColorDialog.UseVisualStyleBackColor = true;
+            this._btnShowColorDialog.Click += new System.EventHandler(this._btnShowColorDialog_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 285);
+            this.Controls.Add(this._btnShowColorDialog);
             this.Controls.Add(this._txtBoostSpeed);
             this.Controls.Add(this.label5);
             this.Controls.Add(this._txtTurnRate);
@@ -269,6 +286,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.NumericUpDown _txtBoostSpeed;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ColorDialog spheroColorDialog;
+        private System.Windows.Forms.Button _btnShowColorDialog;
     }
 }
 
