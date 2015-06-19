@@ -114,8 +114,11 @@ namespace Sphero_360_Frontend
             if (_tcpClient.Connected)
             {
 
+                //Message is JSON object containing speed and direction
+                string jsonMessage = "{\"speed\":\"" + speed + "\", \"direction\":\"" + direction + "\"}";
+
                 //Convert our message into a Byte Array
-                Byte[] data = System.Text.Encoding.ASCII.GetBytes(speed + "|" + direction + "*");
+                Byte[] data = System.Text.Encoding.ASCII.GetBytes(jsonMessage);
 
                 //Try to send it!
                 try
