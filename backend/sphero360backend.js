@@ -43,16 +43,24 @@ function listen() {
 function handleCommand(c)
 {	
 	//Sometimes more than one message comes through at a time, so split it up...
-	var commands = c.split("*");
+	var commands = c.split("}");
 	
 	//Run for each command. length - 1 because the last will be empty.
 	for(var i = 0; i < commands.length - 1; i++)
 	{
-		//Speed is in front of the |
-		speed = commands[i].split("|")[0];
+		//Since we removed the } with split
+		commands[i] += "}";
 		
-		//Direction is behind the |
-		direction = commands[i].split("|")[1];
+		var commandObject = JSON.parse(commands[i]);
+		
+		if(commandObject.hasOwnProperty('speed'))
+		{
+			speed = commandObject.speed;
+		}
+		if(commandObject.hasOwnProperty('direction'))
+		{
+			direction = commandObject.direction;
+		}
 		
 		//Output to log
 		console.log("Speed: " + speed + "; Direction: " + direction);
