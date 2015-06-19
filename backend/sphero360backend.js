@@ -62,6 +62,11 @@ function handleCommand(c)
 			direction = commandObject.direction;
 		}
 		
+		if(commandObject.hasOwnProperty('color'))
+		{
+			orb.color(commandObject.direction);
+		}
+		
 		//Output to log
 		console.log("Speed: " + speed + "; Direction: " + direction);
 		
