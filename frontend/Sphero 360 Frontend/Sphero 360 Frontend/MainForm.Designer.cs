@@ -46,6 +46,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.spheroColorDialog = new System.Windows.Forms.ColorDialog();
             this._btnShowColorDialog = new System.Windows.Forms.Button();
+            this._btnListControls = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this._txtPort)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._txtMaxSpeed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._txtTurnRate)).BeginInit();
@@ -273,12 +274,26 @@
             this._btnShowColorDialog.UseVisualStyleBackColor = true;
             this._btnShowColorDialog.Click += new System.EventHandler(this._btnShowColorDialog_Click);
             // 
+            // _btnListControls
+            // 
+            this._btnListControls.BackgroundImage = global::Sphero_360_Frontend.Properties.Resources.button;
+            this._btnListControls.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._btnListControls.ForeColor = System.Drawing.Color.White;
+            this._btnListControls.Location = new System.Drawing.Point(14, 269);
+            this._btnListControls.Name = "_btnListControls";
+            this._btnListControls.Size = new System.Drawing.Size(303, 23);
+            this._btnListControls.TabIndex = 15;
+            this._btnListControls.Text = "Show Gamepad Controls";
+            this._btnListControls.UseVisualStyleBackColor = true;
+            this._btnListControls.Click += new System.EventHandler(this._btnListControls_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::Sphero_360_Frontend.Properties.Resources.bg;
-            this.ClientSize = new System.Drawing.Size(331, 244);
+            this.ClientSize = new System.Drawing.Size(331, 304);
+            this.Controls.Add(this._btnListControls);
             this.Controls.Add(this._btnShowColorDialog);
             this.Controls.Add(this._txtBoostSpeed);
             this.Controls.Add(this.label5);
@@ -324,6 +339,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ColorDialog spheroColorDialog;
         private System.Windows.Forms.Button _btnShowColorDialog;
+        private System.Windows.Forms.Button _btnListControls;
     }
 }
 

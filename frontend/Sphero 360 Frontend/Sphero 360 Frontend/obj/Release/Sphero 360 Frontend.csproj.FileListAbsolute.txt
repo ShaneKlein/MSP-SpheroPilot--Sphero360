@@ -9,3 +9,4 @@ C:\Users\Shane\Desktop\Sphero360\frontend\Sphero 360 Frontend\Sphero 360 Fronten
 C:\Users\Shane\Desktop\Sphero360\frontend\Sphero 360 Frontend\Sphero 360 Frontend\obj\Release\Sphero 360 Frontend.csproj.GenerateResource.Cache
 C:\Users\Shane\Desktop\Sphero360\frontend\Sphero 360 Frontend\Sphero 360 Frontend\obj\Release\Sphero 360 Frontend.exe
 C:\Users\Shane\Desktop\Sphero360\frontend\Sphero 360 Frontend\Sphero 360 Frontend\obj\Release\Sphero 360 Frontend.pdb
+C:\Users\Shane\Desktop\Sphero360\frontend\Sphero 360 Frontend\Sphero 360 Frontend\obj\Release\Sphero_360_Frontend.GamepadControls.resources

@@ -15,19 +15,24 @@ namespace Sphero_360_Frontend
 {
     public partial class MainForm : Form
     {
+        private GamepadControls controlsWindow = new GamepadControls();
+
         private int _direction = 0;
         private int _oldDirection = 0;
 
         private int _speed = 0;
         private int _oldSpeed = 0;
 
-        private System.Drawing.Color _spheroColor = System.Drawing.Color.LimeGreen;
+        private string _spheroColor = "FFFFFF";
 
         private TcpClient _tcpClient = new TcpClient();
         private NetworkStream _stream;
 
         private GamePadState _currentState;
         private GamePadState _previousState = new GamePadState();
+
+        private string[] _colors = new string[] { "FF8080", "FF0000", "FFFF80", "FFFF00", "FF8000", "80FF80", "00FF00", "008000", "80FFFF", "0000FF", "800080", "FF80C0", "FF0080" };
+        private int _colorIndex = 0;
 
         //Constructor
         public MainForm()
@@ -48,11 +53,6 @@ namespace Sphero_360_Frontend
             if (_speed > 0)
             {
                 _roll(_speed, _direction);
-            }
-
-            if (spheroColorDialog.Color != _spheroColor)
-            {
-                _changeColor(spheroColorDialog.Color);
             }
         }
 
@@ -76,17 +76,29 @@ namespace Sphero_360_Frontend
                 _speed = (int)_txtBoostSpeed.Value;
             }
 
+            //Check if user is pressing B to stop.
+            if (_currentState.Buttons.B == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
+            {
+                _stopOrb();
+                stoppedOrb = true;
+            }
+
             //Check if the user just pressed X to reverse (Spin 180 degrees). Only activates if X wasn't held down the previous tick.
             if (_currentState.Buttons.X == Microsoft.Xna.Framework.Input.ButtonState.Pressed && _previousState.Buttons.X == Microsoft.Xna.Framework.Input.ButtonState.Released)
             {
                 _direction += 180;
             }
 
-            //Check if user is pressing B to stop.
-            if (_currentState.Buttons.B == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
+            //Check if the user just pressed LB to change colors "left". Only activates if LB wasn't held down the previous tick.
+            if (_currentState.Buttons.LeftShoulder == Microsoft.Xna.Framework.Input.ButtonState.Pressed && _previousState.Buttons.LeftShoulder == Microsoft.Xna.Framework.Input.ButtonState.Released)
             {
-                _stopOrb();
-                stoppedOrb = true;
+                _changePresetColor(-1);
+            }
+
+            //Check if the user just pressed RB to change colors "right". Only activates if RB wasn't held down the previous tick.
+            if (_currentState.Buttons.RightShoulder == Microsoft.Xna.Framework.Input.ButtonState.Pressed && _previousState.Buttons.RightShoulder == Microsoft.Xna.Framework.Input.ButtonState.Released)
+            {
+                _changePresetColor(1);
             }
 
             //Reduce the direction (Convert the direction if >= 360)
@@ -133,15 +145,47 @@ namespace Sphero_360_Frontend
             _sendMessage(jsonMessage);
         }
 
-        //Changes the color of the ball
-        private void _changeColor(System.Drawing.Color newCollor)
+        //Changes the color index by the parameter, then changes the sphero to the relevant color
+        private void _changePresetColor(int changeIndex)
         {
-            //Set our current color to the new color
-            _spheroColor = newCollor;
+            //Apply the index change
+            _colorIndex += changeIndex;
 
-            //Send message. We have to convert the color to a hex code.
-            //The horribly ugly converting the color to Argb to color before converting to hex is because before that, it could output "Lime"
-            string jsonMessage = "{\"color\":\"" + ColorTranslator.ToHtml(System.Drawing.Color.FromArgb(_spheroColor.ToArgb())) + "\"}";
+            //If the index is < 0, add the length of the colors array
+            if(_colorIndex < 0)
+            {
+                _colorIndex += _colors.Length;
+            }
+
+            //If the index is > length of the colors array, subtract the length of the colors array
+            if(_colorIndex >= _colors.Length)
+            {
+                _colorIndex -= _colors.Length;
+            }
+
+            //Change color to the relevant color
+            _changeColor(_colors[_colorIndex]);
+        }
+
+        //Changes the color of the ball
+        private void _changeColor(System.Drawing.Color newColor)
+        {
+            //Converting the color to Argb to color before converting to hex is because before that, it could output "Lime"
+            //Set _spheroColor to it
+            _spheroColor = ColorTranslator.ToHtml(System.Drawing.Color.FromArgb(newColor.ToArgb()));
+
+            //Now call _changeColor for hex's
+            _changeColor(_spheroColor);
+        }
+
+        //Changes the color of the ball. newColor should be a color hex.
+        private void _changeColor(string newColor)
+        {
+            //Set _spheroColor
+            _spheroColor = newColor;
+
+            //Make JSON message.
+            string jsonMessage = "{\"color\":\"" + newColor +"\"}";
 
             //Send it
             _sendMessage(jsonMessage);
@@ -259,6 +303,17 @@ namespace Sphero_360_Frontend
         private void _btnShowColorDialog_Click(object sender, EventArgs e)
         {
             spheroColorDialog.ShowDialog();
+            _changeColor(spheroColorDialog.Color);
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void _btnListControls_Click(object sender, EventArgs e)
+        {
+            controlsWindow.Show();
         }
     }
 }
