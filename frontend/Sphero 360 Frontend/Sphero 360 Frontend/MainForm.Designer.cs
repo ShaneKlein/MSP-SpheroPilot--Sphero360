@@ -47,6 +47,8 @@
             this.spheroColorDialog = new System.Windows.Forms.ColorDialog();
             this._btnShowColorDialog = new System.Windows.Forms.Button();
             this._btnListControls = new System.Windows.Forms.Button();
+            this.readTimer = new System.Windows.Forms.Timer(this.components);
+            this.rumbleTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this._txtPort)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._txtMaxSpeed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._txtTurnRate)).BeginInit();
@@ -287,6 +289,17 @@
             this._btnListControls.UseVisualStyleBackColor = true;
             this._btnListControls.Click += new System.EventHandler(this._btnListControls_Click);
             // 
+            // readTimer
+            // 
+            this.readTimer.Enabled = true;
+            this.readTimer.Interval = 50;
+            this.readTimer.Tick += new System.EventHandler(this.readTimer_Tick);
+            // 
+            // rumbleTimer
+            // 
+            this.rumbleTimer.Interval = 200;
+            this.rumbleTimer.Tick += new System.EventHandler(this.rumbleTimer_Tick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
@@ -340,6 +353,8 @@
         private System.Windows.Forms.ColorDialog spheroColorDialog;
         private System.Windows.Forms.Button _btnShowColorDialog;
         private System.Windows.Forms.Button _btnListControls;
+        private System.Windows.Forms.Timer readTimer;
+        private System.Windows.Forms.Timer rumbleTimer;
     }
 }
 

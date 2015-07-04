@@ -14,17 +14,22 @@ orb.connect(listen);
 
 var speed = 0;
 var direction = 0;
+var color = 0;
 var stopRoll = false;
+
+var writeSocket;
 
 //Runs once connected to Sphero.
 function listen() {
+	
+	orb.detectCollisions();
 	
 	//Turn on the blue taillight so we know what the back of the Sphero is.
 	orb.setBackLed(127);
  
 	//Create server to connect to.
 	var server = net.createServer(function(socket) {
-		
+		writeSocket = socket;
 		//Activates when data is received
 		socket.on('data', function (data) {
 			
@@ -38,6 +43,24 @@ function listen() {
 	//Start server
 	server.listen(9000, '127.0.0.1');
 
+	  orb.on("collision", function(data) {
+    console.log("collision detected");
+
+    orb.color("#000000");
+
+	try
+	{
+	writeSocket.write('{"rumble":1.0}\0');
+	}
+	catch(ex)
+	{
+		console.log(ex);
+	}
+	
+    setTimeout(function() {
+      orb.color(color);
+    }, 200);
+  });
 }
 
 //Handles when input from frontend is received
@@ -65,7 +88,8 @@ function handleCommand(c)
 		
 		if(commandObject.hasOwnProperty('color'))
 		{
-			console.log("Color: " + commandObject.color);
+			color = commandObject.color;
+			console.log("Color: " + color);
 			orb.color(commandObject.color);
 		}
 		
@@ -83,10 +107,19 @@ function handleCommand(c)
 		if(!stopRoll)
 		{
 		//Output to log
-		console.log("Speed: " + speed + "; Direction: " + direction);
-		
-		//Let's roll!
-		orb.roll(speed, direction);
+		console.log("RECEIVED: Speed: " + speed + "; Direction: " + direction);
 		}
+	}
+	
+	
+		
+		
+	if(!stopRoll)
+	{
+	//Output to log
+	console.log("SENDING: Speed: " + speed + "; Direction: " + direction);
+		
+	//Let's roll!
+	orb.roll(speed, direction);
 	}
 }

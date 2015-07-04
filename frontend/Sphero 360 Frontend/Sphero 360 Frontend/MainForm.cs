@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Windows.Forms;
+using System.Web.Script.Serialization;
 
 namespace Sphero_360_Frontend
 {
@@ -26,7 +27,7 @@ namespace Sphero_360_Frontend
         private string _spheroColor = "FFFFFF";
 
         private TcpClient _tcpClient = new TcpClient();
-        private NetworkStream _stream;
+        private NetworkStream _stream = null;
 
         private GamePadState _currentState;
         private GamePadState _previousState = new GamePadState();
@@ -314,6 +315,50 @@ namespace Sphero_360_Frontend
         private void _btnListControls_Click(object sender, EventArgs e)
         {
             controlsWindow.Show();
+        }
+
+        private void readTimer_Tick(object sender, EventArgs e)
+        {
+            char receivedByteCharacter;
+            string receivedMessage = "";
+
+            while(_stream != null && _stream.CanRead && _stream.DataAvailable)
+            {
+                receivedByteCharacter = Convert.ToChar(_stream.ReadByte());
+                if(receivedByteCharacter != '\0')
+                {
+                    receivedMessage += receivedByteCharacter;
+                }
+                else
+                {
+                    //Handle message
+                    _handleMessage(receivedMessage);
+                    
+                    //Clear string so it can be reused
+                    receivedMessage = "";
+                }
+            }
+        }
+
+        private void _handleMessage(string receivedMessageString)
+        {
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+            Dictionary<String, float> receivedMessage = jsSerializer.Deserialize<Dictionary<String, float>>(receivedMessageString);
+
+            foreach (KeyValuePair<String, float> entry in receivedMessage)
+            {
+                if(entry.Key == "rumble")
+                {
+                        GamePad.SetVibration(PlayerIndex.One, entry.Value, entry.Value);
+                        rumbleTimer.Start();
+                }
+            }
+        }
+
+        private void rumbleTimer_Tick(object sender, EventArgs e)
+        {
+            GamePad.SetVibration(PlayerIndex.One, 0, 0);
+            rumbleTimer.Stop();
         }
     }
 }

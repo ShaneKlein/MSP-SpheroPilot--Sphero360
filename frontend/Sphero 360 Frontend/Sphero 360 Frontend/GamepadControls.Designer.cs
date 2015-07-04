@@ -55,7 +55,7 @@
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "GamepadControls";
-            this.Text = "Controls";
+            this.Text = "s";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GamepadControls_FormClosing);
             this.ResumeLayout(false);
 
