@@ -42,13 +42,17 @@ function listen() {
 	//Start server
 	server.listen(9000, '127.0.0.1');
 
+	//Make it so that the orb lets us know if it runs into something
 	orb.detectCollisions();
 
+	//When the orb runs into something...
 	orb.on("collision", function(data) {
 		console.log("collision detected");
 
+		//Turn it to a dark collor
 		orb.color("#000000");
 
+		//Try to tell the front end to rumble.
 		try
 		{
 			writeSocket.write('{"rumble":1.0}\0');
@@ -58,6 +62,7 @@ function listen() {
 			console.log(ex);
 		}
 		
+		//Return the color of the orb to the original color after some time
 		setTimeout(function() {
 			orb.color(color);
 		}, 200);
@@ -76,6 +81,7 @@ function handleCommand(c)
 		//Since we removed the } with split
 		commands[i] += "}";
 		
+		//Parse the JSON we got.
 		var commandObject = JSON.parse(commands[i]);
 		
 		if(commandObject.hasOwnProperty('speed'))
@@ -108,7 +114,7 @@ function handleCommand(c)
 		if(!stopRoll)
 		{
 			//Output to log
-			console.log("RECEIVED: Speed: " + speed + "; Direction: " + direction);
+			console.log("RECEIVED FROM FRONTEND: Speed: " + speed + "; Direction: " + direction);
 		}
 	}
 	
@@ -118,7 +124,7 @@ function handleCommand(c)
 	if(!stopRoll)
 	{
 		//Output to log
-		console.log("SENDING: Speed: " + speed + "; Direction: " + direction);
+		console.log("SENDING TO SPHERO: Speed: " + speed + "; Direction: " + direction);
 		
 		//Let's roll!
 		orb.roll(speed, direction);
