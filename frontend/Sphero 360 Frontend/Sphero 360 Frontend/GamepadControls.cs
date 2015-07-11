@@ -22,5 +22,9 @@ namespace Sphero_360_Frontend
             this.Hide();
             e.Cancel = true;
         }
+
+        private void GamepadControls_Load(object sender, EventArgs e)
+        {
+        }
     }
 }

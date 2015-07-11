@@ -71,21 +71,27 @@ namespace Sphero_360_Frontend
             //Calculate the direction. The X of the Thumb Stick goes from -1 to 1, so multiply by rotation amount and add to direction.
             _direction += (int)(_currentState.ThumbSticks.Left.X * (int)_txtTurnRate.Value);
 
-            //Check if the user is pressing A to boost.
-            if (_currentState.Buttons.A == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
+            //Try to connect to the server. Only activates if Start wasn't held down the previous tick.
+            if(_currentState.Buttons.Start == Microsoft.Xna.Framework.Input.ButtonState.Pressed && _previousState.Buttons.Start == Microsoft.Xna.Framework.Input.ButtonState.Released)
+            {
+                _connectServer();
+            }
+
+            //Check if the user is pressing B to boost.
+            if (_currentState.Buttons.B == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
             {
                 _speed = (int)_txtBoostSpeed.Value;
             }
 
-            //Check if user is pressing B to stop.
-            if (_currentState.Buttons.B == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
+            //Check if user is pressing A to stop.
+            if (_currentState.Buttons.A == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
             {
                 _stopOrb();
                 stoppedOrb = true;
             }
 
-            //Check if the user just pressed X to reverse (Spin 180 degrees). Only activates if X wasn't held down the previous tick.
-            if (_currentState.Buttons.X == Microsoft.Xna.Framework.Input.ButtonState.Pressed && _previousState.Buttons.X == Microsoft.Xna.Framework.Input.ButtonState.Released)
+            //Check if the user just pressed T to reverse (Spin 180 degrees). Only activates if Y wasn't held down the previous tick.
+            if (_currentState.Buttons.Y == Microsoft.Xna.Framework.Input.ButtonState.Pressed && _previousState.Buttons.Y == Microsoft.Xna.Framework.Input.ButtonState.Released)
             {
                 _direction += 180;
             }

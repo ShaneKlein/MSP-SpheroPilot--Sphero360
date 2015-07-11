@@ -111,6 +111,7 @@
     <None Include="Resources\bg.png" />
     <None Include="Resources\button.png" />
     <None Include="Resources\button_tall.png" />
+    <None Include="Resources\diagram.png" />
     <Content Include="sphero360_32.ico" />
   </ItemGroup>
   <ItemGroup>
